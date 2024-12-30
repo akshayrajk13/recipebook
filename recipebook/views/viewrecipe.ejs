@@ -1,0 +1,101 @@
+<div
+  class="modal fade"
+  id="deletemodal"
+  tabindex="-1"
+  aria-labelledby="deleteModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="deleteModalLabel">Delete Recipe?</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning" data-bs-dismiss="modal">
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          id="proceedDeleteBtn"
+          data-bs-dismiss="modal"
+        >
+          Proceed
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="card mt-3">
+    <img
+      src="<%= data.image %>"
+      class="img-fluid"
+      alt="Image"
+      style="
+        width: 100%;
+        max-height: 400px;
+        min-height: 200px;
+        object-fit: contain;
+      "
+    />
+    <div class="card-body">
+      <h2 class="card-title"><%= data.title %> by <%= data.user_id.name %></h2>
+      <div class="mb-2">
+        <button class="btn btn-warning btn-sm me-2">
+          Difficulty: <%= data.difficulty %>
+        </button>
+        <button class="btn btn-primary btn-sm me-2">
+          Cooking Time: <%= data.cookingtime.hours %>h <%=
+          data.cookingtime.minutes %>m
+        </button>
+        <button class="btn btn-success btn-sm me-2">
+          Views: <%= data.viewcount %>
+        </button>
+      </div>
+      <h6>Ingredients:</h6>
+      <ul>
+        <% data.ingredients.forEach((ingredient) => { %>
+        <li>
+          <%= ingredient.ingredientname %> - <%= ingredient.quantity %> <%=
+          ingredient.unit %>
+        </li>
+        <% }); %>
+      </ul>
+      <h6>Steps:</h6>
+      <ol>
+        <% data.steps.forEach((step, index) => { %>
+        <li>Step <%= index + 1 %>: <%= step %></li>
+        <% }); %>
+      </ol>
+    </div>
+    <div class="card-footer text-center">
+      <button
+        type="button"
+        class="btn btn-danger"
+        data-bs-toggle="modal"
+        data-bs-target="#deletemodal"
+        id="deleteRecipeBtn"
+      >
+        Delete
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Set the delete button's action after modal confirmation
+  document
+    .getElementById("proceedDeleteBtn")
+    .addEventListener("click", function () {
+      var recipeId = "<%= data._id %>"; // Get the recipe ID dynamically
+      window.location.href = "/deleterecipe/" + recipeId; // Navigate to delete route after confirmation
+    });
+</script>

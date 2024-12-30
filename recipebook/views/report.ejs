@@ -1,0 +1,75 @@
+<div class="container">
+  <h1 class="display-1 mt-4">Report</h1>
+  <% if (data.length > 0) { %>
+  <table
+    class="table table-bordered table-responsive table-striped table-hover table-dark"
+  >
+    <caption>
+      Most Viewed Recipes
+    </caption>
+    <thead class="text-center">
+      <tr>
+        <th scope="col">Title</th>
+        <th scope="col">User</th>
+        <th scope="col">Email</th>
+        <th scope="col">Date & Time</th>
+        <th scope="col">Views</th>
+      </tr>
+    </thead>
+    <% data.forEach(recipe => { %>
+    <tbody>
+      <tr>
+        <td><%= recipe.title %></td>
+        <td><%= recipe.user_id.name %></td>
+        <td><%= recipe.user_id.email %></td>
+        <td><%= recipe.createdAt %></td>
+        <td><%= recipe.viewcount %></td>
+      </tr>
+      <% }); %>
+    </tbody>
+  </table>
+  <nav>
+    <ul class="pagination justify-content-center">
+      <% if (currentPage > 1) { %>
+      <li class="page-item">
+        <a
+          class="page-link"
+          href="/?page=<%= currentPage - 1 %>&limit=10"
+          aria-label="Previous"
+        >
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <% } else { %>
+      <li class="page-item disabled">
+        <a class="page-link" href="#" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <% } %> <% for (let i = 1; i <= totalPages; i++) { %>
+      <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+        <a class="page-link" href="/report?page=<%= i %>&limit=10"><%= i %></a>
+      </li>
+      <% } %> <% if (currentPage < totalPages) { %>
+      <li class="page-item">
+        <a
+          class="page-link"
+          href="/report?page=<%= currentPage + 1 %>&limit=10"
+          aria-label="Next"
+        >
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+      <% } else { %>
+      <li class="page-item disabled">
+        <a class="page-link" href="#" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+      <% } %>
+    </ul>
+  </nav>
+  <% } else { %>
+  <p>No Recipes found.</p>
+  <% } %>
+</div>
