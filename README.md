@@ -1,0 +1,1 @@
+This is a personal project designed to create a digital recipe book that allows users to explore and share a wide range of recipes. The project includes both a user-facing interface and an admin side for managing content.
